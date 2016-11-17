@@ -1,7 +1,8 @@
 # Readme
 
 #### Description
-This includes really simple abstract 'dataset' and 'bot' classes, and quick / dirty implementation of a seq2seq bot and
+This includes a very small start at abstract 'dataset' and 'bot' classes, a quick / dirty implementation of a seq2seq bot,
+ an 'echo bot' which just repeats the user's words, and
 a data pipeline for the Cornell movie dialog dataset.
 
 Everything will change, this is just fun / starting playing around.
@@ -14,6 +15,14 @@ Tensorflow
 Internet connection for python to download the data
 
 #### Usage:
+
+##### Echo Bot:
+
+Interactive testing / chat:
+
+    python echo_bot.py
+
+##### Seq2Seq Bot:
 
 Training:
 
