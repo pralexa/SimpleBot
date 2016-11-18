@@ -39,7 +39,7 @@ class Bot(object):
         sys.stdout.flush()
         sys.stdout.write("---")
         sys.stdout.flush()
-        sys.stdout.write("Hello, I'm Lexi. Let's talk.")
+        sys.stdout.write("Hello, I'm Lexi. Let's talk.\n")
         sys.stdout.flush()
         sys.stdout.write("> ")
         sys.stdout.flush()
