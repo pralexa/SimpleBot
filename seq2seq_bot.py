@@ -109,7 +109,7 @@ class Seq2Seq(bot.Bot):
         output_softmax = [np.exp(logit) / np.sum(np.exp(logit), axis=1) for logit in output_with_temp]
         top_5 = [np.argsort(output_softmax)[-5:] for logit in output_softmax]
         print(top_5)
-        outputs = [np.random.choice(FLAGS.vocab_size, 1, p=logits)[0] for logits in output_with_temp]
+        outputs = [np.random.choice(FLAGS.vocab_size, 1, p=logits)[0] for logits in output_softmax]
 
         # outputs = [int(np.argmax(logit, axis=1)) for logit in output_softmax]
         # outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
