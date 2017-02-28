@@ -86,7 +86,6 @@ class Seq2Seq(bot.Bot):
         print("Reloading parameters and starting conversation mode.")
         self.init_for_conversation()
 
-
     def get_response(self, sentence):
         # Get token-ids for the input sentence.
         token_ids = data_utils.sentence_to_token_ids(tf.compat.as_bytes(sentence), self.source_vocab)
@@ -106,10 +105,14 @@ class Seq2Seq(bot.Bot):
         _, _, output_logits = self.model.step(self.sess, encoder_inputs, decoder_inputs,
                                          target_weights, bucket_id, True)
         # This is a greedy decoder - outputs are just argmaxes of output_logits.
-        # output_with_temp = [logit * FLAGS.temperature for logit in output_logits]
-        # output_softmax = [np.exp(logit) / np.sum(np.exp(logit), axis=1) for logit in output_with_temp]
+        output_with_temp = [logit * FLAGS.temperature for logit in output_logits]
+        output_softmax = [np.exp(logit) / np.sum(np.exp(logit), axis=1) for logit in output_with_temp]
+        top_5 = [np.argsort(output_softmax)[-5:] for logit in output_softmax]
+        print(top_5)
+        outputs = [np.random.choice(FLAGS.vocab_size, 1, p=logits)[0] for logits in output_with_temp]
+
         # outputs = [int(np.argmax(logit, axis=1)) for logit in output_softmax]
-        outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
+        # outputs = [int(np.argmax(logit, axis=1)) for logit in output_logits]
         # If there is an EOS symbol in outputs, cut them at that point.
         if data_utils.EOS_ID in outputs:
             outputs = outputs[:outputs.index(data_utils.EOS_ID)]
