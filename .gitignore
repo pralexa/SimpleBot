@@ -1,0 +1,11 @@
+# Temporary files
+*~
+*.swp
+*.swo
+
+# Object files
+*.o
+*.pyc
+
+# Data
+tmp
