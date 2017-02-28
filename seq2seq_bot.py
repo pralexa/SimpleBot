@@ -106,7 +106,9 @@ class Seq2Seq(bot.Bot):
                                          target_weights, bucket_id, True)
         # This is a greedy decoder - outputs are just argmaxes of output_logits.
         output_with_temp = [logit * FLAGS.temperature for logit in output_logits]
-        output_softmax = [np.exp(logit) / np.sum(np.exp(logit), axis=1) for logit in output_with_temp]
+        output_softmax = [np.exp(logit) for logit in output_with_temp]
+        output_softmax = [exponential - np.maximum(exponential) for exponential in output_softmax]
+        output_softmax = [exponential / np.sum(exponential, axis=1) for exponential in output_softmax]
         top_5 = [np.argsort(output_softmax)[-5:] for logit in output_softmax]
         print(top_5)
         outputs = [np.random.choice(FLAGS.vocab_size, 1, p=logits)[0] for logits in output_softmax]
